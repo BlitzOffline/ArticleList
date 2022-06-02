@@ -36,19 +36,19 @@ namespace ArticleList
             var authorsSortedByNumberOfArticles = GetAuthorsSortedByMostArticles(articles);
 
             
-            Console.WriteLine("Articles by author:");
+            Console.WriteLine("Articles by author 'author1':");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articlesByAuthor.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles by tags:");
+            Console.WriteLine("Articles by tag 'tag3':");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articlesByTag.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles created before:");
+            Console.WriteLine("Articles created before01.01.2000:");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleBefore.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles creaded after:");
+            Console.WriteLine("Articles creaded after 01.01.2000:");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleAfter.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
@@ -56,15 +56,15 @@ namespace ArticleList
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleDuringWeekend.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles updated before:");
+            Console.WriteLine("Articles updated before 01.01.2000:");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleUpdateBefore.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles updated after:");
+            Console.WriteLine("Articles updated after 01.01.2000:");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleUpdateAfter.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
-            Console.WriteLine("Articles updated before by author:");
+            Console.WriteLine("Articles updated before 01.01.2000 by author 'author1':");
             Console.WriteLine(string.Join(", " + Environment.NewLine, articleUpdateBeforeByAuthor.Select(article => article.ToString())));
             Console.WriteLine();
             Thread.Sleep(10);
@@ -81,7 +81,15 @@ namespace ArticleList
             Console.WriteLine();
             Thread.Sleep(10);
             Console.WriteLine("Authors by number of articles:");
-            Console.WriteLine(string.Join(", ", authorsSortedByNumberOfArticles.Select(article => article.ToString())));
+            Console.WriteLine(string.Join(", ",
+                authorsSortedByNumberOfArticles.Select(author =>
+                    author + ": " + FilterAuthor(author, articles).Length)));
+            Console.WriteLine();
+            Thread.Sleep(10);
+            Console.WriteLine("Number of articles between 01.01.1980 and 01.01.2000: " + 
+                              FilterPublishedAfter(
+                                  new DateTime(1980, 1, 1),
+                                  FilterPublishedBefore(new DateTime(2000, 1, 1), articles)).Length);
         }
 
         private static Article[] FilterAuthor(string author, IEnumerable<Article> articles)
