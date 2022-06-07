@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ArticleList.Articles
+namespace ArticleList.Article
 {
     public class Article
     {

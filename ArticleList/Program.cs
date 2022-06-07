@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using ArticleList.Articles;
 
 namespace ArticleList
 {
@@ -92,43 +91,43 @@ namespace ArticleList
                                   FilterPublishedBefore(new DateTime(2000, 1, 1), articles)).Length);
         }
 
-        private static Article[] FilterAuthor(string author, IEnumerable<Article> articles)
+        private static Article.Article[] FilterAuthor(string author, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => article.Authors.Contains(author)).ToArray();
         }
         
-        private static Article[] FilterTag(string tag, IEnumerable<Article> articles)
+        private static Article.Article[] FilterTag(string tag, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => article.Tags.Contains(tag)).ToArray();
         }     
         
-        private static Article[] FilterPublishedBefore(DateTime before, IEnumerable<Article> articles)
+        private static Article.Article[] FilterPublishedBefore(DateTime before, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => DateTime.Compare(article.Published, before) < 0).ToArray();
         }
         
         
-        private static Article[] FilterPublishedAfter(DateTime after, IEnumerable<Article> articles)
+        private static Article.Article[] FilterPublishedAfter(DateTime after, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => DateTime.Compare(article.Published, after) > 0).ToArray();
         }
         
-        private static Article[] FilterPublishedOverTheWeekend(IEnumerable<Article> articles)
+        private static Article.Article[] FilterPublishedOverTheWeekend(IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => article.Published.DayOfWeek == DayOfWeek.Saturday || article.Published.DayOfWeek == DayOfWeek.Sunday).ToArray();
         }
         
-        private static Article[] FilterUpdatedBefore(DateTime before, IEnumerable<Article> articles)
+        private static Article.Article[] FilterUpdatedBefore(DateTime before, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => DateTime.Compare(article.LastUpdated, before) < 0).ToArray();
         }
         
-        private static Article[] FilterUpdatedAfter(DateTime after, IEnumerable<Article> articles)
+        private static Article.Article[] FilterUpdatedAfter(DateTime after, IEnumerable<Article.Article> articles)
         {
             return articles.Where(article => DateTime.Compare(article.LastUpdated, after) > 0).ToArray();
         }
 
-        private static string[] GetAuthorsSortedByMostArticles(Article[] articles)
+        private static string[] GetAuthorsSortedByMostArticles(Article.Article[] articles)
         {
             var authors = articles.SelectMany(article => article.Authors).ToHashSet().ToArray();
 
@@ -137,9 +136,9 @@ namespace ArticleList
                 : authors.OrderByDescending(author => FilterAuthor(author, articles).Length).ToArray();
         }
 
-        private static Article[] SortArticlesBy(Article[] articles, Func<Article, Article, bool> func)
+        private static Article.Article[] SortArticlesBy(Article.Article[] articles, Func<Article.Article, Article.Article, bool> func)
         {
-            var articlesCopy = new Article[articles.Length];
+            var articlesCopy = new Article.Article[articles.Length];
             Array.Copy(articles, articlesCopy, articles.Length);
             
             for (var i = 1; i < articlesCopy.Length; i++)
@@ -159,16 +158,16 @@ namespace ArticleList
             return articlesCopy;
         }
 
-        private static Article[] CreateDefaultArticles()
+        private static Article.Article[] CreateDefaultArticles()
         {
             var amount = Random.Next(3, 6);
-            var articles = new Article[amount];
+            var articles = new Article.Article[amount];
             
             for (var i = 0; i < amount; i++)
             {
                 var published = GenerateRandomPublishDate();
                 
-                var article = new Article
+                var article = new Article.Article
                 {
                     Title = GenerateRandomArticleTitle(),
                     Authors = GenerateRandomAuthors(),
